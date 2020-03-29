@@ -1,3 +1,5 @@
 # netty tomcat war deploy
 
-tomcat netty async logger test
+tomcat netty test.
+
+used for test async logger, k8s
