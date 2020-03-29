@@ -1,9 +1,8 @@
 package com.f;
 
-import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,23 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 
-@WebServlet(name = "hello", urlPatterns = "/hello", loadOnStartup = 1)
+@WebServlet(value = "/hello", loadOnStartup = 1)
 public class HelloServlet extends HttpServlet {
-    ObjectMapper objectMapper = new ObjectMapper();
+    private Logger logger = LoggerFactory.getLogger(HelloServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        PrintWriter printWriter = resp.getWriter();
-
-        try(PrintWriter printWriter1 = resp.getWriter()) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("status", "11111");
-            printWriter.println(jsonObject);
+        logger.info("接收 get 请求, params: {}", req.getParameterMap());
+        try (PrintWriter printWriter = resp.getWriter()) {
+            printWriter.println("hello servlet");
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
-
+            logger.info("get 请求完毕...");
         }
     }
 }
